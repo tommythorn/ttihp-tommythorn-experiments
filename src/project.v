@@ -17,11 +17,30 @@ module tt_um_example (
 );
 
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, clk, rst_n, 1'b0};
 
+   reg [31:0] rf[31:0];
+   reg [5:0]  rs1, rs2, rd;
+   reg [7:0]  out_r;
+   assign uo_out  = out_r;
+
+   // We need logic complicated enough that rf isn't optimized away
+   always @(posedge clk) begin
+      //$display("%d %d %d   rf: %d %d %d", rs1, rs2, rd, rf[rs1], rf[rs2], rf[rd]);
+      if (rst_n == 1)
+	case (ui_in[2:0])
+	  0: rs1 <= ui_in[7:3];
+	  1: rs2 <= ui_in[7:3];
+	  2: rd  <= ui_in[7:3];
+	  3: rf[rd] <= rf[rs1] << rf[rs2];
+	  4: rf[rd] <= ui_in[7:3];
+	  5: rf[rd] <= rf[rs1] + rf[rs2];
+	  6: rf[rd] <= rf[rs1] & rf[rs2];
+	  7: out_r <= rf[rs1] >> 24;
+	endcase
+   end
 endmodule
