@@ -24,7 +24,7 @@ module tt_um_example (
   wire _unused = &{ena, clk, rst_n, 1'b0};
 
    reg [31:0] rf[31:0];
-   reg [5:0]  rs1, rs2, rd;
+   reg [4:0]  rs1, rs2, rd;
    reg [7:0]  out_r;
    assign uo_out  = out_r;
 
