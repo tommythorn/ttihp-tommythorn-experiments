@@ -9,11 +9,14 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-Explain how your project works
+The 8b input is split into 5b immediate and 3b opcode which enables
+you to loads rs1, rs2, rd, as well as writing directly to rf[rd].
+Other opcodes allows you to add, shift, and, and finally output the
+top 8b to the output port.
 
 ## How to test
 
-Explain how to use your project
+Replicate the test.py sequence or make your own.
 
 ## External hardware
 
